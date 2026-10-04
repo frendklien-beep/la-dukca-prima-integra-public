@@ -15,7 +15,7 @@ The code illustrates:
 - deterministic fallback behavior;
 - representative automated tests.
 
-The public snapshot intentionally excludes production data, production environment files, internal acceptance datasets, operational evidence, and deployment automation.
+The public snapshot intentionally excludes production data, production environment files, internal acceptance datasets, operational evidence, deployment automation, and the private admin/authentication control plane. The runnable public API surface is limited to system endpoints and citizen-facing chat.
 
 ## Requirements
 

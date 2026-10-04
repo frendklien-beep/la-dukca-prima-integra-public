@@ -50,7 +50,7 @@ class PdfExtractor:
             raise ExtractionError("PDF_CORRUPT") from exc
         try:
             if pdf.needs_pass:
-                raise ExtractionError("PDF_PASSWORD_PROTECTED")
+                raise ExtractionError("PDF_ENCRYPTED")
             if pdf.page_count <= 0:
                 raise ExtractionError("PDF_EMPTY")
             if pdf.page_count > settings.document_max_pages:

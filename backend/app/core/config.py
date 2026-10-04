@@ -48,21 +48,6 @@ class Settings(BaseSettings):
     database_busy_timeout_ms: int = Field(default=5000, ge=100, le=60000)
     sqlite_wal_enabled: bool = True
 
-    admin_session_cookie_name: str = "la_dukca_admin_session"
-    admin_session_idle_minutes: int = 120
-    admin_session_absolute_hours: int = 8
-    admin_remember_idle_hours: int = 24
-    admin_remember_absolute_days: int = 7
-    admin_max_active_sessions: int = 3
-    admin_last_seen_write_minutes: int = 5
-    admin_login_max_failures: int = 5
-    admin_login_failure_window_minutes: int = 15
-    admin_login_lock_minutes: int = 15
-    login_rate_limit_attempts: int = 10
-    login_rate_limit_window_seconds: int = 60
-
-    cookie_secure: bool = False
-    cookie_samesite: str = "lax"
     allowed_origins: list[str] = ["http://localhost:5173"]
 
     document_max_size_bytes: int = Field(default=104857600, ge=1)
@@ -135,14 +120,6 @@ class Settings(BaseSettings):
             raise ValueError("ALLOWED_ORIGINS harus exact dan tidak boleh wildcard/null.")
         return list(dict.fromkeys(value))
 
-    @field_validator("cookie_samesite")
-    @classmethod
-    def same_site(cls, value: str) -> str:
-        normalized = value.lower()
-        if normalized not in {"lax", "strict", "none"}:
-            raise ValueError("COOKIE_SAMESITE tidak valid.")
-        return normalized
-
     @field_validator("api_v1_prefix")
     @classmethod
     def prefix(cls, value: str) -> str:
@@ -171,10 +148,6 @@ class Settings(BaseSettings):
     def validate_environment(self) -> Self:
         if self.environment is not Environment.DEVELOPMENT and self.debug:
             raise ValueError("DEBUG hanya boleh aktif pada development.")
-        if self.cookie_secure and not self.admin_session_cookie_name.startswith("__Host-"):
-            self.admin_session_cookie_name = "__Host-la_dukca_admin_session"
-        if not self.cookie_secure and self.admin_session_cookie_name.startswith("__Host-"):
-            raise ValueError("Cookie __Host- membutuhkan HTTPS/Secure.")
         if self.chunk_min_tokens > self.chunk_target_tokens:
             raise ValueError("CHUNK_MIN_TOKENS tidak boleh melebihi CHUNK_TARGET_TOKENS.")
         if self.chunk_target_tokens > self.chunk_max_tokens:

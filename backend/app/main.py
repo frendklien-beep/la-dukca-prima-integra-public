@@ -13,7 +13,6 @@ from app.core.clock import SystemClock
 from app.core.config import Environment, Settings, get_settings
 from app.core.exception_handlers import register_exception_handlers
 from app.core.logging import configure_logging
-from app.core.login_rate_limit import LoginRateLimiter
 from app.db.engine import create_database_engine
 from app.db.migration_state import inspect_migration_state
 from app.db.session import create_session_factory
@@ -104,16 +103,6 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         debug=resolved.debug,
         openapi_tags=[
             {"name": "System", "description": "Health, readiness, and safe build metadata."},
-            {
-                "name": "Authentication",
-                "description": "Opaque admin session authentication.",
-            },
-            {
-                "name": "Admin Dashboard",
-                "description": "Operational status without chat analytics.",
-            },
-            {"name": "Admin Settings", "description": "Strict allowlisted non-secret settings."},
-            {"name": "Admin Documents", "description": "Official PDF lifecycle control plane."},
             {"name": "Public Chat", "description": "Grounded public Dukcapil consultation."},
         ],
     )
@@ -165,17 +154,14 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         )
     application.state.processing_dispatcher = processing_dispatcher
     document_service.dispatcher = processing_dispatcher
-    application.state.login_rate_limiter = LoginRateLimiter(
-        resolved.login_rate_limit_attempts, resolved.login_rate_limit_window_seconds
-    )
     register_exception_handlers(application)
     register_middleware(application)
     application.add_middleware(
         CORSMiddleware,
         allow_origins=resolved.allowed_origins,
         allow_credentials=True,
-        allow_methods=["GET", "POST", "PATCH", "OPTIONS"],
-        allow_headers=["Accept", "Content-Type", "X-CSRF-Token", "X-Request-ID"],
+        allow_methods=["GET", "POST", "OPTIONS"],
+        allow_headers=["Accept", "Content-Type", "X-Request-ID"],
         expose_headers=["X-Request-ID"],
     )
     register_routes(application, resolved)

@@ -13,6 +13,7 @@ The public tree excludes:
 - citizen production records and uploaded citizen documents;
 - production SQLite or external database contents;
 - production cookies or sessions;
+- public admin/authentication control-plane routes and their operational implementation;
 - private infrastructure identifiers;
 - internal audit evidence;
 - hidden / held-out acceptance datasets;
@@ -21,7 +22,7 @@ The public tree excludes:
 
 ## Included Configuration
 
-`backend/.env.example` contains environment-variable names and safe development defaults/placeholders only.
+`backend/.env.example` contains only a minimal, portfolio-safe set of development variables and placeholders.
 
 Real secrets should be stored in an untracked local `.env` or an appropriate secret manager.
 

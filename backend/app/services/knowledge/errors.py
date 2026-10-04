@@ -31,7 +31,7 @@ class ExtractionError(KnowledgeProcessingError):
             "SOURCE_FILE_CHECKSUM_MISMATCH": "Integritas berkas sumber tidak sesuai.",
             "PDF_INVALID_SIGNATURE": "Berkas tidak memiliki format PDF yang valid.",
             "PDF_CORRUPT": "Berkas PDF rusak atau tidak dapat dibuka.",
-            "PDF_PASSWORD_PROTECTED": "PDF terenkripsi tidak dapat diproses.",
+            "PDF_ENCRYPTED": "PDF terenkripsi tidak dapat diproses.",
             "PDF_PAGE_LIMIT_EXCEEDED": "Jumlah halaman PDF melebihi batas.",
             "PDF_EMPTY": "PDF tidak memiliki halaman.",
             "DOCUMENT_INVALID_STATE": "Status dokumen tidak dapat diproses.",

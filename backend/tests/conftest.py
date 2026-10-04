@@ -44,12 +44,9 @@ from fastapi.testclient import TestClient
 
 from alembic import command
 from app.core.config import Environment, Settings
-from app.core.security import hash_password
 from app.db.migration_state import get_alembic_config
 from app.main import create_app
-from app.models.admin import Admin
 
-PASSWORD = "Correct Horse Battery 123"
 FIXED_NOW = datetime(2026, 8, 1, 2, 30, tzinfo=UTC)
 
 
@@ -92,60 +89,3 @@ def app(test_settings: Settings) -> Iterator[FastAPI]:
 def client(app: FastAPI) -> Iterator[TestClient]:
     with TestClient(app) as test_client:
         yield test_client
-
-
-@pytest.fixture
-def active_admin(app: FastAPI) -> Admin:
-    now = app.state.clock.now()
-    with app.state.session_factory() as db:
-        with db.begin():
-            admin = Admin(
-                username="administrator",
-                password_hash=hash_password(PASSWORD),
-                display_name="Administrator",
-                email=None,
-                role="administrator",
-                is_active=True,
-                failed_login_count=0,
-                failed_login_window_started_at=None,
-                locked_until=None,
-                last_login_at=None,
-                password_changed_at=now,
-                created_at=now,
-                updated_at=now,
-            )
-            db.add(admin)
-        db.refresh(admin)
-        db.expunge(admin)
-        return admin
-
-
-@pytest.fixture
-def authenticated_client(client: TestClient, active_admin: Admin) -> tuple[TestClient, str]:
-    response = client.post(
-        "/api/v1/auth/login",
-        json={"username": "administrator", "password": PASSWORD, "remember_me": False},
-    )
-    assert response.status_code == 200
-    return client, response.json()["data"]["csrf_token"]
-
-
-@pytest.fixture
-def mutation_headers(authenticated_client: tuple[TestClient, str]) -> dict[str, str]:
-    _client, csrf_token = authenticated_client
-    return {
-        "Origin": "http://localhost:5173",
-        "X-CSRF-Token": csrf_token,
-    }
-
-
-@pytest.fixture
-def valid_pdf_bytes() -> bytes:
-    import pymupdf
-
-    document = pymupdf.open()
-    page = document.new_page()
-    page.insert_text((72, 72), "Dokumen resmi La Dukca PRIMA Integra")
-    payload = document.tobytes()
-    document.close()
-    return payload

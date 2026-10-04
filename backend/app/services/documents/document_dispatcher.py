@@ -112,7 +112,13 @@ class InProcessDocumentProcessingDispatcher:
             if item is self._STOP:
                 self._queue.task_done()
                 break
-            assert isinstance(item, DocumentProcessingJob)
+            if not isinstance(item, DocumentProcessingJob):
+                logger.error(
+                    "document_processing_invalid_queue_item type=%s",
+                    type(item).__name__,
+                )
+                self._queue.task_done()
+                continue
             try:
                 await asyncio.wait_for(
                     self.processor.process(
@@ -179,8 +185,13 @@ class InProcessDocumentProcessingDispatcher:
                     try:
                         source = self.storage.resolve(self.settings, document.storage_key)
                     except Exception:
-                        continue
-                    if source.is_file():
+                        logger.warning(
+                            "document_recovery_storage_resolve_failed document_id=%s",
+                            document_id,
+                            exc_info=True,
+                        )
+                        source = None
+                    if source is not None and source.is_file():
                         pending.append(document_id)
         return pending
 

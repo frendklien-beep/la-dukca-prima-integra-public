@@ -64,7 +64,7 @@ def validate_pdf_structure(path: Path, *, max_pages: int) -> int:
         try:
             if document.needs_pass:
                 raise document_error(
-                    "PDF_PASSWORD_PROTECTED",
+                    "PDF_ENCRYPTED",
                     "PDF yang dilindungi password tidak dapat digunakan.",
                     422,
                 )

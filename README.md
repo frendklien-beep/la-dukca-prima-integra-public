@@ -211,6 +211,7 @@ This repository is intentionally sanitized:
 - no private API keys;
 - no internal infrastructure identifiers;
 - no protected held-out acceptance sets;
+- no public admin/authentication control-plane endpoints;
 - no production auto-deployment workflow.
 
 See [docs/security-and-privacy.md](docs/security-and-privacy.md).
