@@ -74,6 +74,26 @@ This public snapshot documents the architecture without publishing protected rou
 
 See [docs/srl-rag-overview.md](docs/srl-rag-overview.md).
 
+## Engineering Orchestration — VENOM OS
+
+Development of La Dukca PRIMA Integra follows a structured AI-assisted engineering methodology referred to as **VENOM OS**.
+
+VENOM OS is not a conventional operating system. It is an engineering orchestration framework designed around:
+
+- authoritative-state verification before action;
+- explicit authority boundaries;
+- bounded execution;
+- audit-driven corrective work;
+- qualification before promotion;
+- evidence-based PASS / FAIL decisions;
+- protection of already-qualified behavior;
+- fail-closed handling of unresolved evidence;
+- controlled promotion and post-change verification.
+
+The public repository documents only the methodology. Protected operational prompts, internal qualification datasets, deployment identifiers, and production-control procedures are intentionally excluded.
+
+See [docs/venom-os.md](docs/venom-os.md).
+
 ## Response Contract
 
 Citizen-facing responses can be composed using a consistent structure:
@@ -146,6 +166,7 @@ Protected held-out sets, internal canary datasets, qualification evidence, and p
 ├── docs/
 │   ├── architecture.md
 │   ├── srl-rag-overview.md
+│   ├── venom-os.md
 │   └── security-and-privacy.md
 └── .github/
     └── SECURITY.md
