@@ -10,6 +10,20 @@ La Dukca PRIMA Integra helps citizens understand population-administration and c
 
 The system is designed around a bounded AI pipeline: interpret citizen intent, resolve the relevant service context, retrieve supporting material, validate claims against available evidence, and return a structured citizen-facing answer. It does **not** claim direct access to Indonesia's population database.
 
+## Application Preview
+
+The public product surface is designed as a responsive, citizen-facing consultation experience. These screenshots show only the public consultation interface; private administration and operational control-plane screens are intentionally excluded from this portfolio snapshot.
+
+### Desktop Citizen Consultation
+
+<img src="docs/screenshots/la-dukca-desktop.png" alt="La Dukca PRIMA Integra desktop citizen consultation interface" width="100%">
+
+### Responsive Mobile Experience
+
+<p align="center">
+  <img src="docs/screenshots/la-dukca-mobile.png" alt="La Dukca PRIMA Integra mobile citizen consultation interface" width="360">
+</p>
+
 ## The Problem
 
 Public-service questions are difficult for a generic chatbot because:
@@ -164,6 +178,9 @@ Protected held-out sets, internal canary datasets, qualification evidence, and p
 ├── frontend/
 │   └── README.md
 ├── docs/
+│   ├── screenshots/
+│   │   ├── la-dukca-desktop.png
+│   │   └── la-dukca-mobile.png
 │   ├── architecture.md
 │   ├── srl-rag-overview.md
 │   ├── venom-os.md
