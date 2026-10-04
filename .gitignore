@@ -10,6 +10,7 @@ coverage.xml
 # Virtual environments
 .venv/
 backend/.venv/
+backend/.venv*/
 
 # Environment / credentials
 .env
@@ -50,3 +51,4 @@ Thumbs.db
 
 # Packaging metadata
 *.egg-info/
+backend/build/
