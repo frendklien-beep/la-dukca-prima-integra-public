@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+coverage.xml
+
+# Virtual environments
+.venv/
+backend/.venv/
+
+# Environment / credentials
+.env
+.env.*
+!.env.example
+backend/.env
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Runtime data
+backend/data/*
+!backend/data/uploads/
+!backend/data/processed/
+!backend/data/indexes/
+!backend/data/uploads/.gitkeep
+!backend/data/processed/.gitkeep
+!backend/data/indexes/.gitkeep
+
+# Operational / internal artifacts
+backend/logs/
+backend/artifacts/
+backend/evaluation/
+backend/coverage/
+**/audit_*/
+**/*heldout*
+**/*held-out*
+**/*canary*
+**/*shadow_probe*
+**/*qualification_evidence*
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Packaging metadata
+*.egg-info/
